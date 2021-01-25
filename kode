@@ -1,0 +1,144 @@
+using System;
+using System.Collections.Generic;
+
+namespace MemberList
+{
+    class Program
+    {
+        static private List<string> members = new List<string>();
+        
+        static void Main(string[] args)
+        {
+            bool running = true;
+
+            while (running)
+            {
+                running = MainMenu();
+            }
+
+        }
+        static bool MainMenu()
+        {
+            bool running = true;
+            string input;
+            Console.Clear();
+            Console.WriteLine("\n\n  Test V for at vise listen");
+            Console.WriteLine("  Tast T for at tilføje til listen");
+            Console.WriteLine("  Tast S for at søge fra listen");
+            Console.WriteLine("  Tast R for at redigere i listen");
+            Console.WriteLine("  Tast SL for at slette fra listen");
+            Console.WriteLine("  Tast Q for at afslutte programmet");
+            Console.Write("  Vælg fra menu: ");
+            input = Console.ReadLine();
+
+            switch (input.ToUpper())
+            {
+                case "S":
+                    Søge();
+                    break;
+                case "V":
+                    ShowList();
+                    break;
+                case "T":
+                    AddToList();
+                    break;
+                case "R":
+                    Redigere();
+                    break;
+                case "SL":
+                    Slet();
+                    break;
+                case "Q":
+                    running = false;
+                    break;
+                default:
+                    Console.WriteLine("\n\n  Ugyldig indtastning. Tryk på en tast for at fortsætte");
+                    Console.ReadKey();
+                    break;
+            }
+            return running;
+        }
+        static private void Søge()
+        {
+            int count=0;
+            Console.Clear();
+            Console.Write("Tast søgt navn starte med: ");
+            string bogstav = Console.ReadLine();
+            Console.WriteLine("Søger...");
+            Console.WriteLine("Fandt navn er:");
+            foreach (var element in members.FindAll(element => element.StartsWith($"{bogstav}")))
+            {
+                Console.Write("\t{0}", element);
+                count++;
+            }
+            Console.Write("\n\n  Tryk på en tast for at fortsætte: ");
+            Console.ReadKey();
+        }
+        static private bool ElementFinding()
+        {
+            bool lykkes=false;
+            if(lykkes)
+            {
+                string bogstav = Console.ReadLine();
+                foreach (var element in members.FindAll(element => element.StartsWith($"{bogstav}")))
+                {
+                    Console.WriteLine("{0}", element);
+                }
+                return true;
+            }
+            else
+                return false;
+            
+        }
+        static private void AddToList()
+        {
+            string input;
+            Console.Clear();
+
+            Console.Write("\n\n  Indtast navn: ");
+            input = Console.ReadLine();
+
+            members.Add(input);
+            Console.WriteLine($"\n {input} indsat i listen.");
+        }
+        static private void Redigere()
+        {
+            ShowList();
+            Console.Write("\nTast dit ønsket navn til at redigere:  ");
+            string eksists_navn = Console.ReadLine();
+            int indeks = members.IndexOf(eksists_navn);
+            members.RemoveAt(indeks);
+            Console.Write("\nTast dit nyt navn til at lægge:  ");
+            string nyt_navn = Console.ReadLine();
+            members.Insert(indeks, nyt_navn);
+            Console.Write("\n Tryk på en tast for at fortsætte: ");
+            Console.ReadKey();
+        }
+        static private void Slet()
+        {
+            ShowList();
+            Console.Write("\nIndtast navn: ");
+            string str = Console.ReadLine();
+
+            members.Remove(str.ToLower());
+        }
+        static private void ShowList()
+        {
+            Console.Clear();
+            Console.WriteLine("Navn på listen er som:");
+            if (members.Count > 0)
+            {
+                foreach(var mem in members)
+                {
+                    Console.Write("\t"+mem);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\n Listen er tom. ");
+            }
+            Console.Write("\n Tryk på en tast for at fortsætte: ");
+            Console.ReadKey();
+        }
+    }
+}
