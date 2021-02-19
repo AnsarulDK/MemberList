@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MemberList
@@ -107,13 +108,13 @@ namespace MemberList
             Console.Write("\nTast dit ønsket navn til at redigere:  ");
             string eksists_navn = Console.ReadLine();
             int indeks = members.IndexOf(eksists_navn);
-            members.RemoveAt(indeks);
             Console.Write("\nTast dit nyt navn til at lægge:  ");
             string nyt_navn = Console.ReadLine();
-            members.Insert(indeks, nyt_navn);
+            members[indeks] = nyt_navn;       
             Console.Write("\n Tryk på en tast for at fortsætte: ");
             Console.ReadKey();
         }
+
         static private void Slet()
         {
             ShowList();
